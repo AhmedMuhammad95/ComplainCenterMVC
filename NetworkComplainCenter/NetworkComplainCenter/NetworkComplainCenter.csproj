@@ -44,6 +44,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -126,22 +128,71 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\ComplainsController.cs" />
-    <Compile Include="Controllers\ComputersController.cs" />
+    <Compile Include="Complain.cs">
+      <DependentUpon>ComplainCenterModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ComplainCenterModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ComplainCenterModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ComplainCenterModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ComplainCenterModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ComplainCenterModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ComplainCenterModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="ComplainStatus.cs">
+      <DependentUpon>ComplainCenterModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Computer.cs">
+      <DependentUpon>ComplainCenterModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ComputerStatus.cs">
+      <DependentUpon>ComplainCenterModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\ComplainController.cs" />
+    <Compile Include="Controllers\ComputerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\LocationsController.cs" />
-    <Compile Include="Controllers\NewComplainController.cs" />
-    <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Controllers\LocationController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Location.cs">
+      <DependentUpon>ComplainCenterModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ComplainResult.cs" />
+    <Compile Include="Models\ComputerResult.cs" />
+    <Compile Include="Models\LocationResult.cs" />
+    <Compile Include="Models\UserResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="User.cs">
+      <DependentUpon>ComplainCenterModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserType.cs">
+      <DependentUpon>ComplainCenterModel.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="blank.html" />
     <Content Include="buttons.html" />
     <Content Include="calendar.html" />
     <Content Include="charts.html" />
+    <Content Include="ComplainCenterModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ComplainCenterModel.edmx</DependentUpon>
+      <LastGenOutput>ComplainCenterModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="ComplainCenterModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ComplainCenterModel.edmx</DependentUpon>
+      <LastGenOutput>ComplainCenterModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -220,6 +271,13 @@
     <Content Include="fonts\FontAwesome.otf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <EntityDeploy Include="ComplainCenterModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ComplainCenterModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="ComplainCenterModel.edmx.diagram">
+      <DependentUpon>ComplainCenterModel.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.8.2-vsdoc.js" />
     <Content Include="grids.html" />
     <Content Include="images\1.png" />
@@ -296,18 +354,23 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Complains\Index.cshtml" />
-    <Content Include="Views\Users\Index.cshtml" />
-    <Content Include="Views\Computers\Index.cshtml" />
-    <Content Include="Views\Locations\Index.cshtml" />
-    <Content Include="Views\NewComplain\Index.cshtml" />
+    <Content Include="Views\Complain\Index.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\Computer\Index.cshtml" />
+    <Content Include="Views\Location\Index.cshtml" />
+    <Content Include="Views\Complain\Create.cshtml" />
+    <Content Include="Views\Computer\Create.cshtml" />
+    <Content Include="Views\Location\Create.cshtml" />
+    <Content Include="Views\User\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
