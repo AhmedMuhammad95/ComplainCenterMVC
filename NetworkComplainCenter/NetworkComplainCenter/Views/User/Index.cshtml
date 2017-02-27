@@ -14,10 +14,15 @@
             <h3>Users</h3>
              <div>
                 <button class="btn-lg btn btn-success">New User</button>
-                <div class="w3l_search">
-                    <input type="text" name="search" value="Search" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}" required="">
-                    <button class="btn btn-default" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-                </div>
+                 <div class="w3l_search">
+                     @using (Html.BeginForm("Index", "User", FormMethod.Get))
+                     {
+                         <input type="text" name="keyword" placeholder="Search">
+                         <button class="btn btn-default" type="submit">
+                             <i class="fa fa-search" aria-hidden="true"></i>
+                         </button>
+                     }
+                 </div>
             </div>
                 <table id="table">
                     <thead>
@@ -43,6 +48,23 @@
                         }
                     </tbody>
                 </table>
+            <div class="w3l_search">
+                @{
+                    var _totalrecords = 0;
+                }
+                @if (cp + 1 == total && (ps * total) > Model.TotalUsers)
+                {
+                    _totalrecords = Model.TotalUsers;
+                }
+                else
+                {
+                    _totalrecords = ps * (cp + 1);
+                }
+
+                <div class="dataTables_info" id="example_info" role="status" aria-live="polite">
+                    Showing @Html.Raw((ps * cp) + 1) to  @Html.Raw(_totalrecords) of @Model.TotalUsers entries
+                </div>
+            </div>
             <ul class="pagination">
                 @if (cp > 0)
                 {

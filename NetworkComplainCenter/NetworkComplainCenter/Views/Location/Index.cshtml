@@ -15,12 +15,15 @@
             <div>
                 <button class="hvr-icon-float-away col-10" style="height:50px">New Location</button>
                 <div class="w3l_search">
-                    <input type="text" name="search" value="Search" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}" required="">
-                    <button class="btn btn-default" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                    @using (Html.BeginForm("Index", "Location", FormMethod.Get))
+                    {
+                        <input type="text" name="keyword" placeholder="Search">
+                        <button class="btn btn-default" type="submit">
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                        </button>
+                    }
                 </div>
             </div>
-
-
             <table id="table">
                 <thead>
                     <tr>
@@ -41,29 +44,47 @@
                     }
                 </tbody>
             </table>
-            <ul class="pagination">
-                @if (cp > 0)
-                {
-                    <li class="paginate_button previous" id="example_previous">
-                        <a href="@Url.Action("Index", new { p = cp-1 })" aria-controls="example" data-dt-idx="0" tabindex="0">Previous</a>
-                    </li>
-                }
+            
+                <div class="w3l_search">
+                    @{
+                        var _totalrecords = 0;
+                    }
+                    @if (cp + 1 == total && (ps * total) > Model.TotalLocations)
+                    {
+                        _totalrecords = Model.TotalLocations;
+                    }
+                    else
+                    {
+                        _totalrecords = ps * (cp + 1);
+                    }
+
+                    <div class="dataTables_info" id="example_info" role="status" aria-live="polite">
+                        Showing @Html.Raw((ps * cp) + 1) to  @Html.Raw(_totalrecords) of @Model.TotalLocations entries
+                    </div>
+                </div>
+                    <ul class="pagination">
+                        @if (cp > 0)
+                        {
+                            <li class="paginate_button previous" id="example_previous">
+                                <a href="@Url.Action("Index", new { p = cp-1 })" aria-controls="example" data-dt-idx="0" tabindex="0">Previous</a>
+                            </li>
+                        }
 
 
-                @for (int i = 0; i < total; i++)
-                {
-                    <li class="paginate_button">
-                        <a href="@Url.Action("Index", new { p = i })" aria-controls="example" data-dt-idx="1" tabindex="0">@Html.Raw(i + 1)</a>
-                    </li>
-                }
+                        @for (int i = 0; i < total; i++)
+                        {
+                            <li class="paginate_button">
+                                <a href="@Url.Action("Index", new { p = i })" aria-controls="example" data-dt-idx="1" tabindex="0">@Html.Raw(i + 1)</a>
+                            </li>
+                        }
 
-                @if (cp < total - 1)
-                {
-                    <li class="paginate_button next" id="example_next">
-                        <a href="@Url.Action("Index", new { p = cp + 1 })" aria-controls="example" data-dt-idx="7" tabindex="0">Next</a>
-                    </li>
-                }
-            </ul>
-        </div>
-    </div>
+                        @if (cp < total - 1)
+                        {
+                            <li class="paginate_button next" id="example_next">
+                                <a href="@Url.Action("Index", new { p = cp + 1 })" aria-controls="example" data-dt-idx="7" tabindex="0">Next</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
 </body>
